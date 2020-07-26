@@ -1,4 +1,4 @@
-#Homebridge-samsungtv
+#homebridge-samsungtv-2014
 
 Samsung TV plugin for [Homebridge](https://github.com/nfarina/homebridge)
 
@@ -27,11 +27,36 @@ Example config.json:
 
 Field           | Description
 ----------------|------------
-**accessory**   | Must always be "SamsungTV". (required)
+**accessory**   | Must always be "SamsungTV2014". (required)
 **name**        | The name you want to use to control the TV.
-**ip_address**  | The internal ip address of your samsung TV.
-**send_delay**   | When switching to another channel the individual keys will be send with a short delay (in ms) between them. (default 400)
+**ip_address**  | The internal ip address of your samsung TV.  Sould be static or DHCP reserved
+**send_delay**  | When switching to another channel the individual keys will be send with a short delay (in ms) between them. (default 400)
 
+## Installation
+
+Example config is below.
+```
+{
+	"bridge": {
+		"name": "Homebridge",
+		"username": "CD:21:3D:E3:CE:38",
+		"port": 51826,
+		"pin": "031-45-154"
+	},
+	"description": "This is an example configuration for the Samsung TV 2014 homebridge plugin",
+
+	"accessories": [
+		{
+			"accessory": "SamsungTV",
+			"name": "TV living room",
+			"ip_address": "192.168.1.2"
+		}
+	],
+	"platforms": [
+
+	]
+}
+```
 ## Usage
 
 The first numeric characteristic represents the volume. When changing the volume characteristic the number represents the count of times the volume up or down key will be triggered. In other words to increase the volume by 3 units, the characteristic should be set to 3, to decrease the volume by 2 units e.g. the value would be -2. By setting volume to 0 the mute key will be triggered.
@@ -47,5 +72,6 @@ Since some Samsung TV's will disconnect from the network when turned off it is n
 Furthermore it is not possible to observe current values such as the volume or the channel. Therefore only channel changes that where made through this plugin will be tracked (channel changes with the regular remote for example can not be tracked).
 
 ### Newer Samsung TV's (from 2014)
+By now, only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series. Samsung unfortunately has no documentation on how to pair with the newer tv's and remote control them afterwards.
 
-By now, only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series. Samsung unfortunately has no documentation on how to pair with the newer tv's and remote control them afterwards. The current state of reverse engineering the newer api can be seen [here](https://github.com/mmende/homebridge-samsungtv-control/issues/1) (contribution is welcome).
+For newer TV support, other plugins are readily available.

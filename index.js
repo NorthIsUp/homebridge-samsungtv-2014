@@ -12,7 +12,7 @@ function DisposableCallback(callback) {
 	return function() {
 		_callback.apply(this, arguments)
 		_callback = function() {
-			console.log('Warning: Attempt to call disposable callback twice.')
+			console.log.warn('Attempt to call disposable callback twice.')
 		}
 	}
 }
@@ -26,7 +26,7 @@ module.exports = function(homebridge) {
 	makeChannelCharacteristic();
 	makeKeyCharacteristic();
 
-	homebridge.registerAccessory("homebridge-samsungtv", "SamsungTV", SamsungTvAccessory);
+	homebridge.registerAccessory("homebridge-samsungtv-2014", "SamsungTV2014", SamsungTvAccessory);
 };
 
 //
@@ -40,7 +40,10 @@ function SamsungTvAccessory(log, config) {
 	this.ip_address = config["ip_address"];
 	this.send_delay = config["send_delay"] || 400;
 
-	if (!this.ip_address) throw new Error("You must provide a config value for 'ip_address'.");
+	if (!this.ip_address) {
+		this.log.info("IP address was not provided.  TV will not be initialized for name: ", this.name);
+		return;
+	}
 
 	this.remote = new SamsungRemote({
 		ip: this.ip_address // required: IP address of your Samsung Smart TV
@@ -95,10 +98,10 @@ SamsungTvAccessory.prototype._getOn = function(callback) {
 	var cb = DisposableCallback(callback)
 	this.remote.isAlive(function(err) {
 		if (err) {
-			accessory.log.debug('TV is offline: %s', err);
+			accessory.log.error('TV is offline: %s', err);
 			cb(null, false);
 		} else {
-			accessory.log.debug('TV is alive.');
+			accessory.log.info('TV is alive.');
 			cb(null, true);
 		}
 	});
@@ -110,20 +113,20 @@ SamsungTvAccessory.prototype._setOn = function(on, callback) {
 	if (on) {
 		this.remote.send('KEY_POWERON', function(err) {
 			if (err) {
-				accessory.log.debug('Could not turn TV on: %s', err);
+				accessory.log.error('Could not turn TV on: %s', err);
 				cb(new Error(err));
 			} else {
-				accessory.log.debug('TV successfully turnen on');
+				accessory.log.info('TV successfully turned on');
 				cb(null);
 			}
 		});
 	} else {
 		this.remote.send('KEY_POWEROFF', function(err) {
 			if (err) {
-				accessory.log.debug('Could not turn TV off: %s', err);
+				accessory.log.error('Could not turn TV off: %s', err);
 				cb(new Error(err));
 			} else {
-				accessory.log.debug('TV successfully turnen off');
+				accessory.log.info('TV successfully turned off');
 				cb(null);
 			}
 		});
@@ -143,7 +146,7 @@ SamsungTvAccessory.prototype._setVolume = function(volume, callback) {
 	// Dismiss the request when another key sequence sending
 	if (this.isSendingSequence) {
 		cb(null);
-		this.log.debug('Cannot send volume change by %s while sending other key sequence.', volume);
+		this.log.error('Cannot send volume change by %s while sending other key sequence.', volume);
 		return;
 	}
 	this.isSendingSequence = true;
@@ -157,14 +160,14 @@ SamsungTvAccessory.prototype._setVolume = function(volume, callback) {
 				accessory.log.error('Could not send mute key: %s', err);
 				return;
 			}
-			accessory.log.debug('Finished sending mute key.');
+			accessory.log.info('Finished sending mute key.');
 			accessory.isSendingSequence = false;
 			cb(null);
 		});
 		return;
 	}
 
-	this.log.debug('Changing volume by %s.', volume);
+	this.log.info('Changing volume by %s.', volume);
 
 	var volumeKey = volume > 0 ? 'KEY_VOLUP' : 'KEY_VOLDOWN';
 	var absVolume = Math.abs(volume);
@@ -185,7 +188,7 @@ SamsungTvAccessory.prototype._setVolume = function(volume, callback) {
 			});
 			return;
 		}
-		accessory.log.debug('Finished changing volume by %s.', volume);
+		accessory.log.info('Finished changing volume by %s.', volume);
 		accessory.isSendingSequence = false;
 		cb(null);
 	}
@@ -207,11 +210,11 @@ SamsungTvAccessory.prototype._setChannel = function(channel, callback) {
 	// Dismiss the request when another key sequence sending
 	if (this.isSendingSequence) {
 		cb(null);
-		this.log.debug('Cannot send channel %s while sending other key sequence.', channel);
+		this.log.error('Cannot send channel %s while sending other key sequence.', channel);
 		return;
 	}
 	this.isSendingSequence = true;
-	this.log.debug('Sending channel %s.', channel);
+	this.log.info('Sending channel %s.', channel);
 
 	var channelInt = parseInt(channel, 10);
 	if (isNaN(channelInt) || channelInt < 1 || channelInt > 9999) {
@@ -230,7 +233,7 @@ SamsungTvAccessory.prototype._setChannel = function(channel, callback) {
 
 	function sendKey(index) {
 		if (index < keys.length) {
-			accessory.log.debug('Sending channel key %s.', keys[index]);
+			accessory.log.info('Sending channel key %s.', keys[index]);
 			accessory.remote.send(keys[index], function(err) {
 				if (err) {
 					accessory.isSendingSequence = false;
@@ -246,7 +249,7 @@ SamsungTvAccessory.prototype._setChannel = function(channel, callback) {
 			});
 			return;
 		}
-		accessory.log.debug('Finished sending channel %s.', channel);
+		accessory.log.info('Finished sending channel %s.', channel);
 		accessory.isSendingSequence = false;
 		accessory.channel = channel;
 		cb(null);
@@ -268,11 +271,11 @@ SamsungTvAccessory.prototype._setKey = function(key, callback) {
 	// Dismiss the request when a key sequence is sending
 	if (this.isSendingSequence) {
 		cb(null);
-		this.log.debug('Cannot send key %s while sending a key sequence.', key);
+		this.log.error('Cannot send key %s while sending a key sequence.', key);
 		return;
 	}
 	this.isSendingSequence = true;
-	this.log.debug('Sending key %s.', key);
+	this.log.info('Sending key %s.', key);
 
 	accessory.remote.send('KEY_' + key.toUpperCase(), function(err) {
 		if (err) {
@@ -281,7 +284,7 @@ SamsungTvAccessory.prototype._setKey = function(key, callback) {
 			accessory.log.error('Could not send key %s: %s', key, err);
 			return;
 		}
-		accessory.log.debug('Finished sending key %s.', key);
+		accessory.log.info('Finished sending key %s.', key);
 		accessory.isSendingSequence = false;
 		accessory.key = key;
 		cb(null);

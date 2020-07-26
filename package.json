@@ -1,8 +1,12 @@
 {
-  "name": "homebridge-samsungtv-control",
-  "version": "1.1.1",
-  "description": "Homebridge Samsung TV plugin to control things like channel, volume etc.",
+  "name": "homebridge-samsungtv-2014",
+  "version": "1.1.2",
+  "description": "Homebridge Samsung TV plugin to control things like channel, volume etc on < 2014 Samsung TVs.",
   "contributors": [
+    {
+      "name": "Dustin D. Clark",
+      "email": "dustin@captivatelabs.com"
+    },
     {
       "name": "Martin Mende",
       "email": "martin.mende@aristech.de"
@@ -19,10 +23,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mmende/homebridge-samsungtv-control.git"
+    "url": "https://github.com/dustindclark/homebridge-samsungtv-2014.git"
   },
   "bugs": {
-    "url": "https://github.com/mmende/homebridge-samsungtv-control/issues"
+    "url": "https://github.com/dustindclark/homebridge-samsungtv-2014/issues"
   },
   "engines": {
     "node": ">=0.12.0",
