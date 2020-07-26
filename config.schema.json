@@ -1,0 +1,41 @@
+{
+  "pluginAlias": "SamsungTV2014",
+  "pluginType": "platform",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "tvs": {
+        "title": "TVs",
+        "type": "array",
+        "items": {
+          "title": "TV",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "description": "Name for your TV",
+              "required": true
+            },
+            "ipAddress": {
+              "title": "IP Address",
+              "type": "string",
+              "description": "IP address of the TV",
+              "required": true
+            },
+            "sendDelay": {
+              "title": "Send Delay",
+              "type": "integer",
+              "description": "Delay in millis between sending TV commands",
+            },
+            "useFan": {
+              "title": "Use Fan Type for Volume",
+              "type": "boolean",
+              "description": "If checked, volume will be created as a fan type (such that brightness directives do not control volume)."
+            }
+          }
+        }
+      }
+    }
+  }
+}

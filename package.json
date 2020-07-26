@@ -1,6 +1,6 @@
 {
   "name": "homebridge-samsungtv-2014",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Homebridge Samsung TV plugin to control things like channel, volume etc on < 2014 Samsung TVs.",
   "contributors": [
     {
@@ -14,7 +14,7 @@
   ],
   "author": "CONNCTED",
   "dependencies": {
-    "samsung-remote": "^1.2.5"
+    "samsung-remote": "^1.5.2"
   },
   "license": "ISC",
   "keywords": [

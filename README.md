@@ -31,6 +31,7 @@ Field           | Description
 **name**        | The name you want to use to control the TV.
 **ip_address**  | The internal ip address of your samsung TV.  Sould be static or DHCP reserved
 **send_delay**  | When switching to another channel the individual keys will be send with a short delay (in ms) between them. (default 400)
+**use_fan**     | Use fan accessory type for volume control.  (Prevents setting light brightness from increasing volume).
 
 ## Installation
 
