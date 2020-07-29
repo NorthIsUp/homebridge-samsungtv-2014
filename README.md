@@ -73,9 +73,7 @@ Since some Samsung TV's will disconnect from the network when turned off it is n
 Furthermore it is not possible to observe current values such as the volume or the channel. Therefore only channel changes that where made through this plugin will be tracked (channel changes with the regular remote for example can not be tracked).
 
 ### Newer Samsung TV's (from 2014)
-Only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series. Samsung unfortunately has no documentation on how to pair with the newer tv's and remote control them afterwards.
-
-For newer TV support, other plugins are readily available.
+Only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series.  For newer TV support, other plugins are readily available.
 
 ### Credits
 This plugin was resurrected/updated from the original [Samsung TV Control plugin](https://github.com/mmende/homebridge-samsungtv-control) because I still like my old Samsung TV.
