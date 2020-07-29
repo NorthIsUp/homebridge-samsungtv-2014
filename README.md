@@ -13,21 +13,24 @@ This plugin allows you to control your Samsung TV (models until 2014) with HomeK
 Example config.json:
 
 ```js
-    "accessories": [
-		{
-			"accessory": "SamsungTV",
-			"name": "TV Living room",
-			"ip_address": "192.168.1.2",
-            "send_delay": 400
-		}
-	],
+{
+    "platform": "SamsungTV2014",
+    "tvs": [
+        {
+            "name": "Master Bedroom TV",
+            "ipAddress": "192.168.1.92",
+            "sendDelay": 400,
+            "useFan": true
+        }
+    ]
+}
 ```
 
 ### Explanation:
 
 Field           | Description
 ----------------|------------
-**accessory**   | Must always be "SamsungTV2014". (required)
+**platform**    | Must always be "SamsungTV2014". (required)
 **name**        | The name you want to use to control the TV.
 **ip_address**  | The internal ip address of your samsung TV.  Sould be static or DHCP reserved
 **send_delay**  | When switching to another channel the individual keys will be send with a short delay (in ms) between them. (default 400)
@@ -45,16 +48,19 @@ Example config is below.
 		"pin": "031-45-154"
 	},
 	"description": "This is an example configuration for the Samsung TV 2014 homebridge plugin",
-
-	"accessories": [
-		{
-			"accessory": "SamsungTV",
-			"name": "TV living room",
-			"ip_address": "192.168.1.2"
-		}
-	],
+	"accessories": [],
 	"platforms": [
-
+        {
+            "platform": "SamsungTV2014",
+            "tvs": [
+                {
+                    "name": "Master Bedroom TV",
+                    "ipAddress": "192.168.1.92",
+                    "sendDelay": 400,
+                    "useFan": true
+                }
+            ]
+        }
 	]
 }
 ```
