@@ -66,13 +66,17 @@ The next characteristic represents the channel. To set a channel just set up a s
 
 The last characteristic allows sending any key from [this list](https://github.com/natalan/samsung-remote#remote-keys) without the `KEY_` at the beginning. To send the pre-channel key e.g. set up a scene where this characteristic will be set to `PRECH`.
 
-## Limitations:
+## Limitations
 
 The volume, channel and key characteristics send single keys with a short delay between them to accomplish their task. Therefore to set these characteristics values you should set up a scene with the desired value in the corresponding characteristics so that not every single change will be send before you've finished typing.  
 Since some Samsung TV's will disconnect from the network when turned off it is not possible to turn them back on again over network.
 Furthermore it is not possible to observe current values such as the volume or the channel. Therefore only channel changes that where made through this plugin will be tracked (channel changes with the regular remote for example can not be tracked).
 
 ### Newer Samsung TV's (from 2014)
-By now, only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series. Samsung unfortunately has no documentation on how to pair with the newer tv's and remote control them afterwards.
+Only Samsung TV's until 2014 are supported by this plugin because Samsung dropped the old remote control protocol from their newer tv series. Samsung unfortunately has no documentation on how to pair with the newer tv's and remote control them afterwards.
 
 For newer TV support, other plugins are readily available.
+
+### Credits
+This plugin was resurrected/updated from the original [Samsung TV Control plugin](https://github.com/mmende/homebridge-samsungtv-control) because I still like my old Samsung TV.
+  
