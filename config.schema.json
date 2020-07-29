@@ -26,7 +26,7 @@
             "sendDelay": {
               "title": "Send Delay",
               "type": "integer",
-              "description": "Delay in millis between sending TV commands",
+              "description": "Delay in millis between sending TV commands"
             },
             "useFan": {
               "title": "Use Fan Type for Volume",
