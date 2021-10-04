@@ -12,7 +12,7 @@ function DisposableCallback(callback) {
     return function () {
         _callback.apply(this, arguments)
         _callback = function () {
-            console.log.warn('Attempt to call disposable callback twice.')
+            this.log.warn('Attempt to call disposable callback twice.')
         }
     }
 }
