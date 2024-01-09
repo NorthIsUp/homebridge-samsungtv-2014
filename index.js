@@ -23,9 +23,9 @@ module.exports = function (homebridge) {
     Accessory = homebridge.hap.Accessory;
 
     // we can only do this after we receive the homebridge API object
-    // makeVolumeCharacteristic();
-    // makeChannelCharacteristic();
-    // makeKeyCharacteristic();
+    makeVolumeCharacteristic();
+    makeChannelCharacteristic();
+    makeKeyCharacteristic();
 
     var acc = SamsungTvAccessory.prototype;
     inherits(SamsungTvAccessory, Accessory);
